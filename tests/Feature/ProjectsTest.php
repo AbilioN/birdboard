@@ -30,4 +30,25 @@ class ProjectsTest extends TestCase
 
     }
     
+    /** @test */
+    public function a_project_requires_a_title()
+    {
+
+        $attributes = [
+            'description' => $this->faker->sentence
+        ];
+
+        $this->post('/projects',$attributes)->assertSessionHasErrors('title');
+    }
+
+    /** @test */
+    public function a_project_requires_a_description()
+    {
+
+        $attributes = [
+            'title' => $this->faker->title
+        ];
+
+        $this->post('/projects',$attributes)->assertSessionHasErrors('description');
+    }
 }
