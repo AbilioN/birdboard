@@ -25,9 +25,10 @@ class ProjectController extends Controller
     public function store(ProjectRequest $request)
     {
         $parameters = $request->all();
-        $parameters['owner_id'] = auth()->id;
-        dd($parameters);
+        $parameters['owner_id'] = Auth::user()->id;
+
         $created = Project::create($parameters);
+        // dd(Auth::user());
 
     }
 }
