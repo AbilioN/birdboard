@@ -16,10 +16,13 @@ class ProjectsTest extends TestCase
 
         $this->withoutExceptionHandling();
 
-        $attributes = [
-            'title' => $this->faker->title,
-            'description' => $this->faker->sentence
-        ];
+        // $attributes = [
+        //     'title' => $this->faker->title,
+        //     'description' => $this->faker->sentence,
+        //     'owner_id' => fa
+        // ];
+
+        $attributes = factory('App\Models\Project')->raw();
 
         $this->post('/projects',$attributes);
         $this->assertDatabaseHas('projects',$attributes);
@@ -45,7 +48,14 @@ class ProjectsTest extends TestCase
         $this->post('/projects',$attributes)->assertSessionHasErrors('description');
     }
 
-
+    /** @test */
+    public function a_project_requires_an_owner()
+    {
+        // $this->withoutExceptionHandling();
+        $this->withExceptionHandling();
+        $attributes = factory('App\Models\Project')->raw(['owner_id' => null]);
+        $this->post('/projects',$attributes)->assertSessionHasErrors('owner_id');
+    }
     /** @test */
 
     public function a_user_can_view_a_project()
