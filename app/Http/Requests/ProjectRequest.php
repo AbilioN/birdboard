@@ -26,7 +26,6 @@ class ProjectRequest extends FormRequest
         return [
             'title' => 'required|string',
             'description' => 'required|string',
-            'owner_id' => 'required'
         ];
     }
 }
